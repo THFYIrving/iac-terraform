@@ -1,10 +1,19 @@
-output "container_id" {
-  description = "ID du Docker container"
-  value       = docker_container.nginx.id
+output "instance_id" {
+  description = "ID of the EC2 instance"
+  value       = aws_instance.web.id
 }
-output "clients_names" {
-  value = [for c in docker_container.client : c.name]
+
+output "instance_public_ip" {
+  description = "Public IP of the EC2 instance"
+  value       = aws_instance.web.public_ip
 }
-output "serveur_names" {
-  value = [for s in docker_container.foreach : s.name]
+
+output "ssh_command" {
+  description = "SSH command to connect to the instance"
+  value       = "ssh -i deployer-key.pem ec2-user@${aws_instance.web.public_ip}"
+}
+
+output "bucket_id" {
+  description = "afficher l'id du bucket"
+  value = aws_s3_bucket.demo_bucket.id
 }
